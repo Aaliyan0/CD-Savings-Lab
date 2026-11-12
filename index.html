@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CD Savings Lab | Complete Certificate of Deposit Suite</title>
+  <meta name="description" content="All-in-one educational CD suite: CD maturity calculator, APY converter, CD ladder planner, side-by-side comparison tool, and comprehensive guides.">
+  <link rel="canonical" href="https://cdsavingslab.com/">
+
+  <style>
+    /* ==========================================================================
+       CD SAVINGS LAB - DESIGN SYSTEM & COMPLETE STYLES
+       ========================================================================== */
+    :root {
+      --color-navy: #10243A;
+      --color-navy-dark: #0A1726;
+      --color-blue: #2563EB;
+      --color-blue-hover: #1D4ED8;
+      --color-blue-light: #EFF6FF;
+      --color-teal: #0F9D8A;
+      --color-teal-light: #E6F7F5;
+      --color-bg: #F8FAFC;
+      --color-surface: #FFFFFF;
+      --color-text: #1E293B;
+      --color-muted: #64748B;
+      --color-border: #E2E8F0;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.04);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      --font-mono: ui-monospace, Menlo, Monaco, Consolas, monospace;
+      --max-w: 1140px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-family: var(--font-sans);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    a {
+      color: var(--color-blue);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+    a:hover {
+      color: var(--color-blue-hover);
+      text-decoration: underline;
+    }
+
+    /* Header */
+    .site-header {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--color-navy);
+      font-weight: 800;
+      font-size: 1.25rem;
+    }
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--color-blue);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    /* App Tab Switcher Navigation */
+    .tab-nav {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--color-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover {
+      color: var(--color-blue);
+      background: var(--color-blue-light);
+    }
+    .tab-btn.active {
+      color: #fff;
+      background: var(--color-navy);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 3rem 0 2rem;
+      background: linear-gradient(180deg, #FFFFFF 0%, var(--color-bg) 100%);
+      border-bottom: 1px solid var(--color-border);
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--color-blue-light);
+      color: var(--color-blue);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      color: var(--color-navy);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .hero-lead {
+      color: var(--color-muted);
+      font-size: 1.1rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Content Area & Tab Panels */
+    .view-panel {
+      display: none;
+      padding: 2.5rem 0 3.5rem;
+    }
+    .view-panel.active {
+      display: block;
+    }
+
+    /* Calculator Grid Layout */
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow-sm);
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      color: var(--color-navy);
+      margin-bottom: 1rem;
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--color-navy);
+    }
+    .form-hint {
+      font-size: 0.78rem;
+      color: var(--color-muted);
+      margin-top: 4px;
+    }
+    .form-input, .form-select {
+      width: 100%;
+      height: 42px;
+      padding: 8px 12px;
+      font-size: 0.95rem;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      color: var(--color-text);
+      background: #FFF;
+    }
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Results UI */
+    .results-box {
+      background: #F8FAFC;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    .results-hero-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--color-muted);
+      letter-spacing: 0.04em;
+    }
+    .results-hero-value {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: var(--color-teal);
+      line-height: 1.2;
+      margin-top: 4px;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px dashed var(--color-border);
+      font-size: 0.92rem;
+    }
+    .result-row:last-child {
+      border-bottom: none;
+    }
+    .result-row span:first-child {
+      color: var(--color-muted);
+    }
+    .result-row span:last-child {
+      font-weight: 700;
+      color: var(--color-navy);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      padding: 0 18px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-navy);
+      width: 100%;
+    }
+    .btn-outline:hover {
+      background: var(--color-bg);
+      border-color: #CBD5E1;
+    }
+
+    /* Callouts & Formulas */
+    .callout {
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.84rem;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+    .callout-info {
+      background: var(--color-blue-light);
+      border-left: 4px solid var(--color-blue);
+      color: #1E3A8A;
+    }
+    .callout-warning {
+      background: #FFFBEB;
+      border-left: 4px solid #F59E0B;
+      color: #78350F;
+    }
+    .formula-tag {
+      background: #0F172A;
+      color: #38BDF8;
+      font-family: var(--font-mono);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: #FFF;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+    th, td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    th {
+      background: #F1F5F9;
+      font-weight: 700;
+      color: var(--color-navy);
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Guides Accordion */
+    .accordion-item {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .accordion-header {
+      width: 100%;
+      text-align: left;
+      padding: 18px 22px;
+      background: transparent;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-navy);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .accordion-header:hover {
+      background: #F8FAFC;
+    }
+    .accordion-body {
+      padding: 0 22px 22px;
+      display: none;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #334155;
+      border-top: 1px solid var(--color-border);
+      padding-top: 16px;
+    }
+    .accordion-item.open .accordion-body {
+      display: block;
+    }
+    .accordion-item.open .acc-icon {
+      transform: rotate(180deg);
+    }
+    .acc-icon {
+      font-size: 0.85rem;
+      transition: transform 0.2s ease;
+      color: var(--color-muted);
+    }
+
+    /* Footer */
+    .site-footer {
+      margin-top: auto;
+      background: var(--color-navy);
+      color: #CBD5E1;
+      padding: 3rem 0 2rem;
+      font-size: 0.86rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 2rem;
+    }
+    .footer-brand {
+      color: #FFF;
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .footer-col h4 {
+      color: #FFF;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .footer-links {
+      list-style: none;
+    }
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+    .footer-links button {
+      background: none;
+      border: none;
+      color: #94A3B8;
+      cursor: pointer;
+      font-size: 0.86rem;
+      padding: 0;
+      text-decoration: underline;
+    }
+    .footer-links button:hover {
+      color: #FFF;
+    }
+    .footer-bottom {
+      border-top: 1px solid #1E293B;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: #64748B;
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 860px) {
+      .calc-layout { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .header-inner { flex-direction: column; height: auto; padding: 14px 0; gap: 12px; }
+      .tab-nav { justify-content: center; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CD Savings Lab",
+    "description": "Educational platform and calculators for Certificates of Deposit, APY, compounding, and CD laddering.",
+    "operatingSystem": "All",
+    "applicationCategory": "FinanceApplication"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand" onclick="switchTab('cd-calc')">
+        <span class="brand-icon">CD</span>
+        <span>CD Savings Lab</span>
+      </a>
+
+      <!-- Tab Navigator -->
+      <nav>
+        <ul class="tab-nav">
+          <li><button class="tab-btn active" data-tab="cd-calc" onclick="switchTab('cd-calc')">CD Calculator</button></li>
+          <li><button class="tab-btn" data-tab="apy-calc" onclick="switchTab('apy-calc')">APY Calculator</button></li>
+          <li><button class="tab-btn" data-tab="ladder-calc" onclick="switchTab('ladder-calc')">Ladder Planner</button></li>
+          <li><button class="tab-btn" data-tab="compare-calc" onclick="switchTab('compare-calc')">Compare CDs</button></li>
+          <li><button class="tab-btn" data-tab="guides" onclick="switchTab('guides')">Guides (6)</button></li>
+          <li><button class="tab-btn" data-tab="about" onclick="switchTab('about')">Methodology & About</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero-tag">Educational Deposit Engine</span>
+      <h1>Understand CDs. Compare Rates. Plan Savings.</h1>
+      <p class="hero-lead">Independent, browser-based financial calculators and guides with zero sponsored bias, no accounts, and no data tracking.</p>
+    </div>
+  </section>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="container">
+
+    <!-- ==========================================
+         VIEW 1: CD MATURITY CALCULATOR
+         ========================================== -->
+    <section id="cd-calc" class="view-panel active">
+      <div class="calc-layout">
+        <!-- Input Card -->
+        <div class="card">
+          <h2>CD Maturity Calculator</h2>
+          <form id="form-cd" onsubmit="event.preventDefault();">
+            <div class="form-group">
+              <label for="cd-deposit" class="form-label">Initial Deposit ($)</label>
+              <input type="number" id="cd-deposit" class="form-input" value="10000" min="0" step="100" required>
+              <div class="form-hint">Principal amount to lock into the CD.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="cd-rate" class="form-label">Annual Nominal Rate (%)</label>
+              <input type="number" id="cd-rate" class="form-input" value="4.50" min="0" max="30" step="0.01" required>
+              <div class="form-hint">The base interest rate stated by the bank before compounding.</div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cd-term-val" class="form-label">Term Length</label>
+                <input type="number" id="cd-term-val" class="form-input" value="12" min="1" max="360" required>
+              </div>
+              <div class="form-group">
+                <label for="cd-term-unit" class="form-label">Unit</label>
+                <select id="cd-term-unit" class="form-select">
+                  <option value="months" selected>Months</option>
+                  <option value="years">Years</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cd-freq" class="form-label">Compounding Frequency</label>
+              <select id="cd-freq" class="form-select">
+                <option value="365">Daily (365 times/yr)</option>
+                <option value="12" selected>Monthly (12 times/yr)</option>
+                <option value="4">Quarterly (4 times/yr)</option>
+                <option value="2">Semiannually (2 times/yr)</option>
+                <option value="1">Annually (1 time/yr)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="cd-start-date" class="form-label">Start Date (Optional)</label>
+              <input type="date" id="cd-start-date" class="form-input">
+            </div>
+
+            <button type="reset" class="btn btn-outline">Reset Inputs</button>
+          </form>
+        </div>
+
+        <!-- Output Card -->
+        <div class="card">
+          <h2>Calculation Results</h2>
+          <div class="results-box">
+            <div class="results-hero-label">Estimated Maturity Value</div>
+            <div class="results-hero-value" id="cd-out-maturity">$10,459.40</div>
+          </div>
+
+          <div class="result-row">
+            <span>Total Interest Earned:</span>
+            <span id="cd-out-interest">$459.40</span>
+          </div>
+          <div class="result-row">
+            <span>Principal Deposit:</span>
+            <span id="cd-out-principal">$10,000.00</span>
+          </div>
+          <div class="result-row">
+            <span>Total Return %:</span>
+            <span id="cd-out-return">4.59%</span>
+          </div>
+          <div class="result-row">
+            <span>Term Duration:</span>
+            <span id="cd-out-term">12 months</span>
+          </div>
+          <div class="result-row">
+            <span>Estimated Maturity Date:</span>
+            <span id="cd-out-date">—</span>
+          </div>
+
+          <div class="formula-tag">Formula: A = P(1 + r/n)^(nt)</div>
+          <div class="callout callout-info">
+            <strong>Assumption:</strong> All interest is compounded and retained in the certificate until maturity. Early withdrawal penalties and income taxes are not deducted.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 2: APY CALCULATOR
+         ========================================== -->
+    <section id="apy-calc" class="view-panel">
+      <div class="calc-layout">
+        <div class="card">
+          <h2>APY Calculator</h2>
+          <form id="form-apy" onsubmit="event.preventDefault();">
+            <div class="form-group">
+              <label for="apy-rate" class="form-label">Nominal Annual Interest Rate (%)</label>
+              <input type="number" id="apy-rate" class="form-input" value="4.85" min="0" max="30" step="0.01" required>
+              <div class="form-hint">The base interest percentage before compounding is applied.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="apy-freq" class="form-label">Compounding Schedule</label>
+              <select id="apy-freq" class="form-select">
+                <option value="365" selected>Daily Compounding (365/year)</option>
+                <option value="12">Monthly Compounding (12/year)</option>
+                <option value="4">Quarterly Compounding (4/year)</option>
+                <option value="2">Semiannual Compounding (2/year)</option>
+                <option value="1">Annual Compounding (1/year)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="apy-sample" class="form-label">Example Deposit ($)</label>
+              <input type="number" id="apy-sample" class="form-input" value="10000" min="0" step="100">
+              <div class="form-hint">Displays actual dollar growth over 1 full year.</div>
+            </div>
+
+            <button type="reset" class="btn btn-outline">Reset</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Effective Yield Analysis</h2>
+          <div class="results-box">
+            <div class="results-hero-label">Annual Percentage Yield (APY)</div>
+            <div class="results-hero-value" id="apy-out-yield">4.969%</div>
+          </div>
+
+          <div class="result-row">
+            <span>Stated Nominal Rate:</span>
+            <span id="apy-out-nominal">4.850%</span>
+          </div>
+          <div class="result-row">
+            <span>1-Year Interest on Example Deposit:</span>
+            <span id="apy-out-interest">$496.90</span>
+          </div>
+          <div class="result-row">
+            <span>Total Balance After 1 Year:</span>
+            <span id="apy-out-total">$10,496.90</span>
+          </div>
+
+          <div class="formula-tag">Formula: APY = (1 + r/n)^n - 1</div>
+          <div class="callout callout-info">
+            Under the US Truth in Savings Act (Regulation DD), financial institutions must quote APY so savers can evaluate true returns regardless of compounding quirks.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 3: CD LADDER PLANNER
+         ========================================== -->
+    <section id="ladder-calc" class="view-panel">
+      <div class="calc-layout">
+        <div class="card">
+          <h2>CD Ladder Planner</h2>
+          <form id="form-ladder" onsubmit="event.preventDefault();">
+            <div class="form-group">
+              <label for="ladder-total" class="form-label">Total Capital to Invest ($)</label>
+              <input type="number" id="ladder-total" class="form-input" value="25000" min="1000" step="500" required>
+              <div class="form-hint">This sum will be divided evenly across your selected CD rungs.</div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ladder-count" class="form-label">Number of Rungs</label>
+                <select id="ladder-count" class="form-select">
+                  <option value="3">3 CDs</option>
+                  <option value="4">4 CDs</option>
+                  <option value="5" selected>5 CDs</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="ladder-start" class="form-label">Start Date</label>
+                <input type="date" id="ladder-start" class="form-input">
+              </div>
+            </div>
+
+            <h3 style="font-size:1rem; margin:16px 0 8px; color:var(--color-navy);">Configure CD Rungs</h3>
+            <div id="ladder-rungs-box"></div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Portfolio Summary</h2>
+          <div class="results-box">
+            <div class="results-hero-label">Total Estimated Interest</div>
+            <div class="results-hero-value" id="ladder-out-interest">$3,425.10</div>
+          </div>
+
+          <div class="result-row">
+            <span>Initial Principal:</span>
+            <span id="ladder-out-principal">$25,000.00</span>
+          </div>
+          <div class="result-row">
+            <span>Final Combined Maturity:</span>
+            <span id="ladder-out-maturity">$28,425.10</span>
+          </div>
+          <div class="result-row">
+            <span>Average Nominal Yield:</span>
+            <span id="ladder-out-avg">4.18%</span>
+          </div>
+
+          <div class="callout callout-info">
+            <strong>Ladder Strategy:</strong> When each rung matures, you can access the cash without penalties or roll it into a new long-term CD to keep high returns cycling.
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Table -->
+      <div class="card" style="margin-top:24px;">
+        <h2>Ladder Maturity Schedule</h2>
+        <div class="table-wrap">
+          <table id="ladder-table">
+            <thead>
+              <tr>
+                <th>Rung</th>
+                <th>Term</th>
+                <th>Deposit</th>
+                <th>Interest Rate</th>
+                <th>Maturity Date</th>
+                <th>Interest Earned</th>
+                <th>Maturity Total</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 4: COMPARE TWO CDS
+         ========================================== -->
+    <section id="compare-calc" class="view-panel">
+      <div class="card" style="margin-bottom:20px;">
+        <h2>Side-by-Side CD Comparison Tool</h2>
+        <p style="color:var(--color-muted); font-size:0.95rem;">Enter two competing CD offers with different rates, terms, or compounding schedules to find the higher-yielding choice.</p>
+      </div>
+
+      <div class="calc-layout">
+        <!-- Option A -->
+        <div class="card">
+          <h2>CD Offer A</h2>
+          <div class="form-group">
+            <label class="form-label">Deposit ($)</label>
+            <input type="number" id="cmp-a-dep" class="form-input" value="10000" min="0" step="500">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nominal Rate (%)</label>
+            <input type="number" id="cmp-a-rate" class="form-input" value="4.75" min="0" max="30" step="0.01">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Term Length (Months)</label>
+            <input type="number" id="cmp-a-term" class="form-input" value="12" min="1" max="120">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Compounding</label>
+            <select id="cmp-a-freq" class="form-select">
+              <option value="365" selected>Daily (365/yr)</option>
+              <option value="12">Monthly (12/yr)</option>
+              <option value="1">Annually (1/yr)</option>
+            </select>
+          </div>
+
+          <div class="results-box" style="margin-top:14px;">
+            <div class="result-row">
+              <span>Effective APY:</span>
+              <span id="cmp-a-out-apy">4.86%</span>
+            </div>
+            <div class="result-row">
+              <span>Interest Earned:</span>
+              <span id="cmp-a-out-interest">$486.44</span>
+            </div>
+            <div class="result-row">
+              <span>Maturity Total:</span>
+              <span id="cmp-a-out-maturity">$10,486.44</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option B -->
+        <div class="card">
+          <h2>CD Offer B</h2>
+          <div class="form-group">
+            <label class="form-label">Deposit ($)</label>
+            <input type="number" id="cmp-b-dep" class="form-input" value="10000" min="0" step="500">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nominal Rate (%)</label>
+            <input type="number" id="cmp-b-rate" class="form-input" value="4.60" min="0" max="30" step="0.01">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Term Length (Months)</label>
+            <input type="number" id="cmp-b-term" class="form-input" value="18" min="1" max="120">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Compounding</label>
+            <select id="cmp-b-freq" class="form-select">
+              <option value="365">Daily (365/yr)</option>
+              <option value="12" selected>Monthly (12/yr)</option>
+              <option value="1">Annually (1/yr)</option>
+            </select>
+          </div>
+
+          <div class="results-box" style="margin-top:14px;">
+            <div class="result-row">
+              <span>Effective APY:</span>
+              <span id="cmp-b-out-apy">4.70%</span>
+            </div>
+            <div class="result-row">
+              <span>Interest Earned:</span>
+              <span id="cmp-b-out-interest">$712.39</span>
+            </div>
+            <div class="result-row">
+              <span>Maturity Total:</span>
+              <span id="cmp-b-out-maturity">$10,712.39</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Summary -->
+      <div class="card" style="margin-top:20px;">
+        <h2>Verdict & Differential</h2>
+        <p id="cmp-verdict" style="font-size:1.1rem; font-weight:700; color:var(--color-navy); margin-bottom:12px;"></p>
+        <div class="form-row">
+          <div class="result-row">
+            <span>Difference in Final Maturity:</span>
+            <span id="cmp-diff-maturity">$0.00</span>
+          </div>
+          <div class="result-row">
+            <span>Difference in Total Interest:</span>
+            <span id="cmp-diff-interest">$0.00</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 5: EDUCATIONAL GUIDES (ALL 6)
+         ========================================== -->
+    <section id="guides" class="view-panel">
+      <div class="card" style="margin-bottom:20px;">
+        <h2>Educational CD Guides</h2>
+        <p style="color:var(--color-muted);">Click on any topic below to expand our plain-English educational guides.</p>
+      </div>
+
+      <!-- Guide 1 (Includes Do-Follow Link to itscdcalculator.com with anchor 'Certificate of Deposit') -->
+      <div class="accordion-item open">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>1. CD Basics: What Is a CD and How Does It Work?</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="accordion-body">
+          <p>A Certificate of Deposit (CD) is a formal savings agreement with a bank or credit union. In banking terms, CDs are classified as <em>time deposits</em>. In return for committing your deposit for a predetermined period (such as 6 months, 1 year, or 5 years), the institution pays a guaranteed, fixed interest rate that cannot drop during the term.</p>
+          <p>Before committing your savings to a specific depository institution, researching terms across an independent <a href="https://itscdcalculator.com">Certificate of Deposit</a> resource can help you visualize how differing maturity dates shape your overall liquidity. Reviewing these benchmark variables upfront ensures you enter an account agreement fully aware of how your final yield is determined.</p>
+          <p><strong>Federal Deposit Insurance:</strong> In the US, CDs are backed by federal deposit insurance up to $250,000 per depositor, per institution, per ownership category. Commercial banks are insured by the <strong>FDIC</strong> (Federal Deposit Insurance Corporation), while credit unions are insured by the <strong>NCUA</strong> (National Credit Union Administration). Your principal is protected against bank failure.</p>
+          <p><strong>The Grace Period:</strong> When your CD reaches maturity, banks provide a 7-to-10-day window where you can withdraw principal and interest penalty-free before the account automatically renews into a new term.</p>
+        </div>
+      </div>
+
+      <!-- Guide 2 (Includes Do-Follow Link to percentage-calculator92.vercel.app with anchor 'percentage calculator') -->
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>2. APY vs. Interest Rate: Understanding the Difference</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="accordion-body">
+          <p>While the terms are often used interchangeably, they represent two distinct metrics:</p>
+          <ul>
+            <li><strong>Nominal Interest Rate:</strong> The unadjusted annual rate paid on your balance, ignoring compounding.</li>
+            <li><strong>Annual Percentage Yield (APY):</strong> The true annual return including the effect of compound interest.</li>
+          </ul>
+          <p>Because interest earned in earlier months begins earning interest on itself, <strong>APY will always be greater than or equal to the nominal interest rate</strong>. For example, a 5.00% nominal rate compounded daily delivers an effective APY of <strong>5.127%</strong>.</p>
+          <p>Calculating the subtle proportional difference between nominal percentages and effective yields can be done by examining the rate spread. Savers can quickly verify these rate variances using a handy <a href="https://percentage-calculator92.vercel.app/">percentage calculator</a> to see how tiny basis point shifts translate into actual dollar growth over time.</p>
+        </div>
+      </div>
+
+      <!-- Guide 3 -->
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>3. CD Compounding: Daily, Monthly, and Annual Explained</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="accordion-body">
+          <p>Compounding frequency determines how often earned interest is credited to your principal balance to generate further returns. On a $20,000 3-year CD at a 4.25% nominal rate:</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Frequency</th><th>Final Balance</th><th>Total Interest</th></tr></thead>
+              <tbody>
+                <tr><td>Annual (1x/yr)</td><td>$22,660.10</td><td>$2,660.10</td></tr>
+                <tr><td>Monthly (12x/yr)</td><td>$22,731.97</td><td>$2,731.97</td></tr>
+                <tr><td>Daily (365x/yr)</td><td>$22,738.51</td><td>$2,738.51</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:10px;">Daily compounding earns the highest total yield, which is why most top-tier online banks use daily compounding schedules.</p>
+        </div>
+      </div>
+
+      <!-- Guide 4 (Includes Do-Follow Link to itscdcalculator.com with anchor 'CD Calculator') -->
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>4. CD Laddering: Strategy, Maturities, and Examples</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="accordion-body">
+          <p>Locking all your cash into a 5-year CD limits your liquidity. A CD ladder splits your total deposit into equal parts across multiple maturities (e.g., 1-year, 2-year, 3-year, 4-year, and 5-year terms).</p>
+          <p>To model each tranche of your ladder before opening multiple accounts, running hypothetical deposits through a dedicated <a href="https://itscdcalculator.com">CD Calculator</a> makes scheduling your maturities straightforward. This helps ensure that the payout from each maturing tranche aligns perfectly with your planned cash-flow needs.</p>
+          <p><strong>The Rollover Effect:</strong> When the 1-year CD matures, you roll those funds into a new 5-year CD. In year 2, the 2-year CD matures and rolls into another 5-year CD. Within a few years, all your money is earning top-tier 5-year interest rates, while 20% of your total balance matures every 12 months for penalty-free liquidity.</p>
+        </div>
+      </div>
+
+      <!-- Guide 5 -->
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>5. Early Withdrawal Penalties: Rules, Costs, and Exceptions</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="accordion-body">
+          <p>If you break a CD before its agreed maturity date, the issuing institution assesses an Early Withdrawal Penalty (EWP). These penalties are typically calculated as a set number of months of interest:</p>
+          <ul>
+            <li><strong>Short terms (under 12 months):</strong> 60 to 90 days of simple interest.</li>
+            <li><strong>Medium terms (1 to 3 years):</strong> 180 to 270 days of simple interest.</li>
+            <li><strong>Long terms (over 3 years):</strong> 365 to 540 days of simple interest.</li>
+          </ul>
+          <p><strong>Risk to Principal:</strong> If you withdraw very early in the term before earning enough interest to satisfy the penalty, the remaining penalty is deducted from your original deposit principal.</p>
+        </div>
+      </div>
+
+      <!-- Guide 6 -->
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAcc(this)">
+          <span>6. CD vs. High-Yield Savings Account: Tradeoffs</span>
+          <span class="acc-icon">▼</span>
+        </button>
+        <div class="accordion-body">
+          <p>Both CDs and High-Yield Savings Accounts (HYSAs) carry identical $250,000 federal insurance backing, but satisfy different needs:</p>
+          <ul>
+            <li><strong>Choose an HYSA:</strong> For emergency reserves and monthly savings where you need anytime access without penalties. HYSA interest rates are variable and fluctuate with the Federal Reserve rate.</li>
+            <li><strong>Choose a CD:</strong> When you have cash set aside for a specific date (e.g., home down payment in 2 years) and want to guarantee a fixed yield even if market interest rates fall.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 6: METHODOLOGY, ABOUT & DISCLAIMER
+         ========================================== -->
+    <section id="about" class="view-panel">
+      <div class="card" style="margin-bottom:20px;">
+        <h2>Methodology & Transparency</h2>
+        <p>CD Savings Lab operates under mathematical formulas defined by the federal Truth in Savings Act (Regulation DD, 12 CFR Part 1030).</p>
+        <div class="formula-tag">Maturity Formula: A = P * (1 + r/n)^(n*t)</div>
+        <div class="formula-tag">Annual Percentage Yield: APY = (1 + r/n)^n - 1</div>
+        <p><strong>Rounding Standards:</strong> All dollar balances are evaluated with unrounded 64-bit precision during compounding, then formatted with native bankers' half-up rounding via <code>Intl.NumberFormat('en-US')</code>.</p>
+      </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <h2>Privacy Architecture</h2>
+        <p>This entire application runs 100% inside your client-side browser using vanilla JavaScript. We maintain no backend servers, no user accounts, no tracking cookies, and no database. When you refresh the page, your data is wiped.</p>
+      </div>
+
+      <div class="card">
+        <h2>Educational Disclaimer</h2>
+        <p class="callout callout-warning">
+          <strong>Notice:</strong> CD Savings Lab provides calculations strictly for educational and illustrative purposes. We do not provide licensed financial, tax, or investment advice. Depository rules, penalty terms, and yields differ across banks and credit unions. Always consult official account disclosures before opening a deposit product.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">CD Savings Lab</div>
+          <p>Independent, educational Certificate of Deposit calculators and guides for US savers.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Calculators</h4>
+          <ul class="footer-links">
+            <li><button onclick="switchTab('cd-calc')">CD Maturity Calculator</button></li>
+            <li><button onclick="switchTab('apy-calc')">APY Converter</button></li>
+            <li><button onclick="switchTab('ladder-calc')">Ladder Planner</button></li>
+            <li><button onclick="switchTab('compare-calc')">Side-by-Side Comparison</button></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul class="footer-links">
+            <li><button onclick="switchTab('guides')">All 6 Guides</button></li>
+            <li><button onclick="switchTab('about')">Methodology & Formulas</button></li>
+            <li><button onclick="switchTab('about')">Disclaimer & Privacy</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; CD Savings Lab. Standalone educational release.</div>
+        <div>Federal insurance guarantees provided by FDIC and NCUA at participating institutions.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       VANILLA JAVASCRIPT ENGINE (ALL APPS & MATH)
+       ========================================== -->
+  <script>
+    // Currency & Formatting Helpers
+    const fmtUSD = (v) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(isFinite(v) ? v : 0);
+    const fmtPct = (v, d = 3) => new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: d, maximumFractionDigits: d }).format(isFinite(v) ? v / 100 : 0);
+    const fmtDate = (d) => (!d || isNaN(d.getTime())) ? '—' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+    // Tab Navigation Switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      const targetPanel = document.getElementById(tabId);
+      const targetBtn = document.querySelector(`[data-tab="${tabId}"]`);
+      if (targetPanel) targetPanel.classList.add('active');
+      if (targetBtn) targetBtn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Accordion Toggle for Guides
+    function toggleAcc(btn) {
+      const item = btn.closest('.accordion-item');
+      item.classList.toggle('open');
+    }
+
+    // ==========================================
+    // 1. CD MATURITY CALCULATOR ENGINE
+    // ==========================================
+    function runCdCalc() {
+      const P = parseFloat(document.getElementById('cd-deposit').value) || 0;
+      const ratePct = parseFloat(document.getElementById('cd-rate').value) || 0;
+      const termVal = parseFloat(document.getElementById('cd-term-val').value) || 0;
+      const unit = document.getElementById('cd-term-unit').value;
+      const n = parseInt(document.getElementById('cd-freq').value, 10);
+      const startVal = document.getElementById('cd-start-date').value;
+
+      const t = unit === 'months' ? termVal / 12 : termVal;
+      const r = ratePct / 100;
+      const exponent = n * t;
+      const A = exponent === 0 ? P : P * Math.pow(1 + (r / n), exponent);
+      const interest = A - P;
+      const retPct = P > 0 ? (interest / P) * 100 : 0;
+
+      let matureStr = '—';
+      if (startVal) {
+        const parts = startVal.split('-');
+        const dt = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+        if (!isNaN(dt.getTime())) {
+          if (unit === 'months') {
+            dt.setMonth(dt.getMonth() + Math.round(termVal));
+          } else {
+            dt.setFullYear(dt.getFullYear() + Math.floor(termVal));
+          }
+          matureStr = fmtDate(dt);
+        }
+      }
+
+      document.getElementById('cd-out-maturity').textContent = fmtUSD(A);
+      document.getElementById('cd-out-interest').textContent = fmtUSD(interest);
+      document.getElementById('cd-out-principal').textContent = fmtUSD(P);
+      document.getElementById('cd-out-return').textContent = fmtPct(retPct, 2);
+      document.getElementById('cd-out-term').textContent = `${termVal} ${unit}`;
+      document.getElementById('cd-out-date').textContent = matureStr;
+    }
+
+    // ==========================================
+    // 2. APY CALCULATOR ENGINE
+    // ==========================================
+    function runApyCalc() {
+      const nomPct = parseFloat(document.getElementById('apy-rate').value) || 0;
+      const n = parseInt(document.getElementById('apy-freq').value, 10);
+      const deposit = parseFloat(document.getElementById('apy-sample').value) || 0;
+
+      const r = nomPct / 100;
+      const apyDec = Math.pow(1 + (r / n), n) - 1;
+      const interest1Y = deposit * apyDec;
+
+      document.getElementById('apy-out-yield').textContent = fmtPct(apyDec * 100, 3);
+      document.getElementById('apy-out-nominal').textContent = fmtPct(nomPct, 3);
+      document.getElementById('apy-out-interest').textContent = fmtUSD(interest1Y);
+      document.getElementById('apy-out-total').textContent = fmtUSD(deposit + interest1Y);
+    }
+
+    // ==========================================
+    // 3. CD LADDER PLANNER ENGINE
+    // ==========================================
+    const ladderPresets = [
+      { months: 12, rate: 4.50 },
+      { months: 24, rate: 4.30 },
+      { months: 36, rate: 4.20 },
+      { months: 48, rate: 4.10 },
+      { months: 60, rate: 4.00 }
+    ];
+
+    function buildLadderInputs() {
+      const count = parseInt(document.getElementById('ladder-count').value, 10);
+      const box = document.getElementById('ladder-rungs-box');
+      box.innerHTML = '';
+
+      for (let i = 0; i < count; i++) {
+        const p = ladderPresets[i] || { months: (i + 1) * 12, rate: 4.0 };
+        const row = document.createElement('div');
+        row.style.cssText = 'display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; padding:10px; background:#f1f5f9; border-radius:6px;';
+        row.innerHTML = `
+          <div>
+            <label class="form-label" style="font-size:0.75rem;">CD ${i + 1} Term (Months)</label>
+            <input type="number" class="form-input lad-term" value="${p.months}" min="1" max="120">
+          </div>
+          <div>
+            <label class="form-label" style="font-size:0.75rem;">Rate %</label>
+            <input type="number" class="form-input lad-rate" value="${p.rate}" step="0.05" min="0" max="30">
+          </div>
+        `;
+        box.appendChild(row);
+      }
+      runLadderCalc();
+    }
+
+    function runLadderCalc() {
+      const total = parseFloat(document.getElementById('ladder-total').value) || 0;
+      const terms = Array.from(document.querySelectorAll('.lad-term')).map(i => parseInt(i.value, 10) || 0);
+      const rates = Array.from(document.querySelectorAll('.lad-rate')).map(i => parseFloat(i.value) || 0);
+      const count = terms.length;
+      if (count === 0 || total <= 0) return;
+
+      const principalPerRung = total / count;
+      let sumInterest = 0;
+      let sumMaturity = 0;
+
+      const startVal = document.getElementById('ladder-start').value;
+      let baseDate = new Date();
+      if (startVal) {
+        const p = startVal.split('-');
+        baseDate = new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]));
+      }
+
+      const tableBody = document.querySelector('#ladder-table tbody');
+      tableBody.innerHTML = '';
+
+      for (let i = 0; i < count; i++) {
+        const m = terms[i];
+        const rPct = rates[i];
+        const r = rPct / 100;
+        const t = m / 12;
+        const maturity = principalPerRung * Math.pow(1 + (r / 12), 12 * t);
+        const interest = maturity - principalPerRung;
+
+        sumInterest += interest;
+        sumMaturity += maturity;
+
+        const mDate = new Date(baseDate);
+        mDate.setMonth(mDate.getMonth() + m);
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>#${i + 1}</strong></td>
+          <td>${m} Months</td>
+          <td>${fmtUSD(principalPerRung)}</td>
+          <td>${rPct.toFixed(2)}%</td>
+          <td>${fmtDate(mDate)}</td>
+          <td>${fmtUSD(interest)}</td>
+          <td><strong>${fmtUSD(maturity)}</strong></td>
+        `;
+        tableBody.appendChild(tr);
+      }
+
+      const avgRate = rates.reduce((a, b) => a + b, 0) / count;
+      document.getElementById('ladder-out-interest').textContent = fmtUSD(sumInterest);
+      document.getElementById('ladder-out-principal').textContent = fmtUSD(total);
+      document.getElementById('ladder-out-maturity').textContent = fmtUSD(sumMaturity);
+      document.getElementById('ladder-out-avg').textContent = `${avgRate.toFixed(2)}%`;
+    }
+
+    // ==========================================
+    // 4. CD COMPARISON ENGINE
+    // ==========================================
+    function evalOffer(P, ratePct, termMonths, freq) {
+      const r = ratePct / 100;
+      const n = parseInt(freq, 10);
+      const t = termMonths / 12;
+      const apy = Math.pow(1 + (r / n), n) - 1;
+      const maturity = P * Math.pow(1 + (r / n), n * t);
+      const interest = maturity - P;
+      return { apyPct: apy * 100, maturity, interest };
+    }
+
+    function runCompareCalc() {
+      const depA = parseFloat(document.getElementById('cmp-a-dep').value) || 0;
+      const rateA = parseFloat(document.getElementById('cmp-a-rate').value) || 0;
+      const termA = parseFloat(document.getElementById('cmp-a-term').value) || 0;
+      const freqA = document.getElementById('cmp-a-freq').value;
+
+      const depB = parseFloat(document.getElementById('cmp-b-dep').value) || 0;
+      const rateB = parseFloat(document.getElementById('cmp-b-rate').value) || 0;
+      const termB = parseFloat(document.getElementById('cmp-b-term').value) || 0;
+      const freqB = document.getElementById('cmp-b-freq').value;
+
+      const resA = evalOffer(depA, rateA, termA, freqA);
+      const resB = evalOffer(depB, rateB, termB, freqB);
+
+      document.getElementById('cmp-a-out-apy').textContent = fmtPct(resA.apyPct, 2);
+      document.getElementById('cmp-a-out-interest').textContent = fmtUSD(resA.interest);
+      document.getElementById('cmp-a-out-maturity').textContent = fmtUSD(resA.maturity);
+
+      document.getElementById('cmp-b-out-apy').textContent = fmtPct(resB.apyPct, 2);
+      document.getElementById('cmp-b-out-interest').textContent = fmtUSD(resB.interest);
+      document.getElementById('cmp-b-out-maturity').textContent = fmtUSD(resB.maturity);
+
+      const diffMat = resA.maturity - resB.maturity;
+      const diffInt = resA.interest - resB.interest;
+
+      document.getElementById('cmp-diff-maturity').textContent = fmtUSD(Math.abs(diffMat));
+      document.getElementById('cmp-diff-interest').textContent = fmtUSD(Math.abs(diffInt));
+
+      const verdict = document.getElementById('cmp-verdict');
+      if (Math.abs(diffMat) < 0.01) {
+        verdict.textContent = 'Both options yield identical returns at maturity.';
+      } else if (diffMat > 0) {
+        verdict.textContent = `Offer A yields ${fmtUSD(diffMat)} more total cash at maturity than Offer B.`;
+      } else {
+        verdict.textContent = `Offer B yields ${fmtUSD(Math.abs(diffMat))} more total cash at maturity than Offer A.`;
+      }
+    }
+
+    // ==========================================
+    // INITIALIZATION & EVENT LISTENERS
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toISOString().split('T')[0];
+      const cdStart = document.getElementById('cd-start-date');
+      const ladStart = document.getElementById('ladder-start');
+      if (cdStart) cdStart.value = today;
+      if (ladStart) ladStart.value = today;
+
+      // Attach Form Listeners
+      const formCd = document.getElementById('form-cd');
+      formCd.addEventListener('input', runCdCalc);
+      formCd.addEventListener('reset', () => setTimeout(runCdCalc, 10));
+
+      const formApy = document.getElementById('form-apy');
+      formApy.addEventListener('input', runApyCalc);
+      formApy.addEventListener('reset', () => setTimeout(runApyCalc, 10));
+
+      const ladCount = document.getElementById('ladder-count');
+      const ladBox = document.getElementById('ladder-rungs-box');
+      const ladTotal = document.getElementById('ladder-total');
+      ladCount.addEventListener('change', buildLadderInputs);
+      ladBox.addEventListener('input', runLadderCalc);
+      ladTotal.addEventListener('input', runLadderCalc);
+      ladStart.addEventListener('input', runLadderCalc);
+
+      const comparePanel = document.getElementById('compare-calc');
+      comparePanel.addEventListener('input', runCompareCalc);
+
+      // Run Initial Computations
+      runCdCalc();
+      runApyCalc();
+      buildLadderInputs();
+      runCompareCalc();
+    });
+  </script>
+</body>
+</html>
